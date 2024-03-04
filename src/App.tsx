@@ -1,17 +1,20 @@
 import "./App.sass";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./screens/home/Home";
+import Cart from "./screens/cart/Cart";
+import Header from "./components/header/Header";
 
 function App() {
     return (
-        <Router>
+        <>
+            <Header />
             <section className='main-container'>
                 <Routes>
                     <Route path='/' element={<Home />} />
-                    {/* <Route path='/cart' element={<Cart />} /> */}
+                    <Route path='/cart' element={<Cart />} />
                 </Routes>
             </section>
-        </Router>
+        </>
     );
 }
 
