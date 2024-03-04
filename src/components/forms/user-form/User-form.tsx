@@ -1,47 +1,28 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { TextField, Button, Box } from "@mui/material";
-
-interface FormValues {
-    name: string;
-    email: string;
-    phone: string;
-    address: string;
-}
+import { TextField, Button, Box, Typography } from "@mui/material";
+import * as Yup from "yup";
 
 const UserForm = () => {
-    const initialValues: FormValues = {
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-    };
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        email: Yup.string().email("Invalid email address").required("Email is required"),
+        phone: Yup.string().required("Phone is required"),
+        address: Yup.string().required("Address is required"),
+    });
 
     return (
         <div>
-            <h1>User Form</h1>
+            <Typography variant="h2" sx={{marginBottom: '10px'}}>User Form</Typography>
             <Formik
-                initialValues={initialValues}
-                validateOnMount={true}
-                validate={values => {
-                    const errors: Partial<FormValues> = {};
-                    if (!values.name) {
-                        errors.name = "Required";
-                    }
-                    if (!values.email) {
-                        errors.email = "Required";
-                    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                        errors.email = "Invalid email address";
-                    }
-                    if (!values.phone) {
-                        errors.phone = "Required";
-                    }
-                    if (!values.address) {
-                        errors.address = "Required";
-                    }
-                    return errors;
+                initialValues={{
+                    name: "",
+                    email: "",
+                    phone: "",
+                    address: "",
                 }}
-                onSubmit={(values): any => {
+                validationSchema={validationSchema}
+                onSubmit={values => {
                     console.log(values);
                 }}
             >
@@ -56,15 +37,14 @@ const UserForm = () => {
                                 variant='outlined'
                                 fullWidth
                                 InputProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
                                 InputLabelProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
-                                required
                             />
-                            <Box sx={{  padding: "5px", lineHeight: 1, color: "red" }}>
-                                <ErrorMessage name='name' />
+                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
+                                <ErrorMessage name='name' component='div' />
                             </Box>
                             <Field
                                 as={TextField}
@@ -72,16 +52,15 @@ const UserForm = () => {
                                 name='email'
                                 label='Email'
                                 variant='outlined'
-                                fullWidth
                                 InputProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
                                 InputLabelProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
-                                required
+                                fullWidth
                             />
-                            <Box sx={{  padding: "5px", lineHeight: 1, color: "red" }}>
+                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
                                 <ErrorMessage name='email' component='div' />
                             </Box>
                             <Field
@@ -92,14 +71,13 @@ const UserForm = () => {
                                 variant='outlined'
                                 fullWidth
                                 InputProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
                                 InputLabelProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
-                                required
                             />
-                            <Box sx={{  padding: "5px", lineHeight: 1, color: "red" }}>
+                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
                                 <ErrorMessage name='phone' component='div' />
                             </Box>
                             <Field
@@ -109,26 +87,19 @@ const UserForm = () => {
                                 label='Address'
                                 variant='outlined'
                                 fullWidth
-                                multiline
                                 InputProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
                                 InputLabelProps={{
-                                    sx: { fontSize: '14px' }
+                                    sx: { fontSize: "14px" },
                                 }}
-                                required
+                                multiline
                             />
-                            <Box sx={{  padding: "5px", lineHeight: 1, color: "red" }}>
+                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
                                 <ErrorMessage name='address' component='div' />
                             </Box>
                         </Box>
-                        <Button
-                            type='submit'
-                            disabled={!isValid}
-                            variant='contained'
-                            sx={{ fontSize: "14px" }}
-                            color='primary'
-                        >
+                        <Button type='submit' disabled={!isValid} sx={{ fontSize: "14px" }} variant='contained' color='primary'>
                             Submit
                         </Button>
                     </Form>
