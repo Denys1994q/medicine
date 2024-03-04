@@ -1,7 +1,8 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { TextField, Button, Box, Typography } from "@mui/material";
+import { Formik, Form } from "formik";
+import { Button, Typography } from "@mui/material";
 import * as Yup from "yup";
+import TextInput from "../../inputs/text-input/Text-input";
 
 const UserForm = () => {
     const validationSchema = Yup.object().shape({
@@ -13,7 +14,9 @@ const UserForm = () => {
 
     return (
         <div>
-            <Typography variant="h2" sx={{marginBottom: '10px'}}>User Form</Typography>
+            <Typography variant='h2' sx={{ marginBottom: "10px" }}>
+                User Form
+            </Typography>
             <Formik
                 initialValues={{
                     name: "",
@@ -22,84 +25,23 @@ const UserForm = () => {
                     address: "",
                 }}
                 validationSchema={validationSchema}
+                validateOnMount={true}
                 onSubmit={values => {
                     console.log(values);
                 }}
             >
                 {({ isValid }) => (
                     <Form>
-                        <Box>
-                            <Field
-                                as={TextField}
-                                type='text'
-                                name='name'
-                                label='Name'
-                                variant='outlined'
-                                fullWidth
-                                InputProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                                InputLabelProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                            />
-                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
-                                <ErrorMessage name='name' component='div' />
-                            </Box>
-                            <Field
-                                as={TextField}
-                                type='email'
-                                name='email'
-                                label='Email'
-                                variant='outlined'
-                                InputProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                                InputLabelProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                                fullWidth
-                            />
-                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
-                                <ErrorMessage name='email' component='div' />
-                            </Box>
-                            <Field
-                                as={TextField}
-                                type='text'
-                                name='phone'
-                                label='Phone'
-                                variant='outlined'
-                                fullWidth
-                                InputProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                                InputLabelProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                            />
-                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
-                                <ErrorMessage name='phone' component='div' />
-                            </Box>
-                            <Field
-                                as={TextField}
-                                type='text'
-                                name='address'
-                                label='Address'
-                                variant='outlined'
-                                fullWidth
-                                InputProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                                InputLabelProps={{
-                                    sx: { fontSize: "14px" },
-                                }}
-                                multiline
-                            />
-                            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
-                                <ErrorMessage name='address' component='div' />
-                            </Box>
-                        </Box>
-                        <Button type='submit' disabled={!isValid} sx={{ fontSize: "14px" }} variant='contained' color='primary'>
+                        <TextInput type='text' name='name' label='Name' />
+                        <TextInput type='email' name='email' label='Email' />
+                        <TextInput type='text' name='phone' label='Phone' />
+                        <TextInput type='text' name='address' label='Address' multiline />
+                        <Button
+                            type='submit'
+                            sx={{ fontSize: "14px" }}
+                            disabled={!isValid}
+                            variant='contained'
+                            color='primary'>
                             Submit
                         </Button>
                     </Form>

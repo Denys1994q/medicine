@@ -8,12 +8,12 @@ function App() {
     return (
         <>
             <Header />
-            <section className='main-container'>
+            <main className='main-container'>
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/cart' element={<Cart />} />
                 </Routes>
-            </section>
+            </main>
         </>
     );
 }

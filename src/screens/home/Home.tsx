@@ -23,7 +23,7 @@ const Home = () => {
                 <SideBar />
             </div>
             <div className='home__cards'>
-                <Cards cards={cards} />
+                <Cards cards={cards} cardWidth={400} isCartBtn />
             </div>
         </div>
     );
