@@ -2,7 +2,19 @@ import { Card, CardContent, CardMedia, Typography, Button } from "@mui/material"
 import "./ProductCard.sass";
 import QuantityBtn from "../quantity-btn/Quantity-btn";
 
-const ProductCard = ({ image, id, title, onAddToCart, onDelete, price, isCartBtn, isQuantityBtn, isFlex }: any) => {
+const ProductCard = ({
+    image,
+    id,
+    title,
+    startQuantity,
+    onAddToCart,
+    onDelete,
+    onQuantityChange,
+    price,
+    isCartBtn,
+    isQuantityBtn,
+    isFlex,
+}: any) => {
     const handleClick = () => {
         if (onAddToCart) {
             onAddToCart();
@@ -12,6 +24,12 @@ const ProductCard = ({ image, id, title, onAddToCart, onDelete, price, isCartBtn
     const handleDelete = (id: string) => {
         if (onDelete) {
             onDelete(id);
+        }
+    };
+
+    const handleQuantityChange = (quantity: number) => {
+        if (onQuantityChange) {
+            onQuantityChange(id, quantity);
         }
     };
 
@@ -37,7 +55,7 @@ const ProductCard = ({ image, id, title, onAddToCart, onDelete, price, isCartBtn
                         Додати до корзини
                     </Button>
                 )}
-                {isQuantityBtn && <QuantityBtn />}
+                {isQuantityBtn && <QuantityBtn onQuantityBtnChange={handleQuantityChange} startValue={startQuantity} />}
             </CardContent>
         </Card>
     );

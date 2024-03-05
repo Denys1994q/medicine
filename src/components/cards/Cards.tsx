@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemText, Divider, Typography } from "@mui/material";
+import { List, ListItem, Typography } from "@mui/material";
 import "./Cards.sass";
 import ProductCard from "../card/ProductCard";
 
@@ -8,11 +8,21 @@ interface CardsProps {
     isFlex?: boolean;
     isCartBtn?: boolean;
     isQuantityBtn?: boolean;
-    addToCartClick?: (card: any) => void
-    onDeleteClick?: (id: string) => void
+    addToCartClick?: (card: any) => void;
+    onDeleteClick?: (id: string) => void;
+    onQuantityChangeClick?: (id: string, quantity: number) => void;
 }
 
-const Cards: React.FC<CardsProps> = ({ cards, onDeleteClick, cardWidth, addToCartClick, isCartBtn, isQuantityBtn, isFlex }) => {
+const Cards: React.FC<CardsProps> = ({
+    cards,
+    onDeleteClick,
+    cardWidth,
+    addToCartClick,
+    onQuantityChangeClick,
+    isCartBtn,
+    isQuantityBtn,
+    isFlex,
+}) => {
     return (
         <List className={isFlex ? "cards-list--flex cards-list" : "cards-list"}>
             {cards.length > 0 ? (
@@ -28,6 +38,8 @@ const Cards: React.FC<CardsProps> = ({ cards, onDeleteClick, cardWidth, addToCar
                             isCartBtn={isCartBtn}
                             onAddToCart={addToCartClick ? () => addToCartClick(card) : undefined}
                             onDelete={onDeleteClick}
+                            onQuantityChange={onQuantityChangeClick}
+                            startQuantity={card.quantity}
                         />
                     </ListItem>
                 ))

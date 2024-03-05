@@ -4,12 +4,13 @@ import Cards from "../../components/cards/Cards";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { removeFromCart } from "../../store/slices/cart";
+import { removeFromCart, updateQuantity } from "../../store/slices/cart";
 
 const Cart = () => {
     const [formValues, setFormValues] = useState(null);
     const dispatch = useAppDispatch();
     const cartProds = useAppSelector(store => store.cart.products);
+    const [total, setTotal] = useState(0)
 
     const handleFormChanges = (values: any) => {
         if (values) {
@@ -24,8 +25,11 @@ const Cart = () => {
     }
 
     const handleCardDelete = (id: string) => {
-        console.log(id)
         dispatch(removeFromCart(id))
+    }
+
+    const handleQuantityChange = (productId: string, newQuantity: number) => {
+        dispatch(updateQuantity({productId, newQuantity}))
     }
 
     return (
@@ -40,11 +44,12 @@ const Cart = () => {
                         cardWidth={600} 
                         onDeleteClick={handleCardDelete}
                         isFlex 
-                        isQuantityBtn />
+                        isQuantityBtn
+                        onQuantityChangeClick={handleQuantityChange} />
                 </div>
             </div>
             <div className='cart__total'>
-                <p className='total'>Total price: 900</p>
+                <p className='total'>Total price: {total} грн. </p>
                 <Button onClick={sendForm} sx={{ fontSize: "14px" }} disabled={!formValues} variant='contained' color='primary'>
                     Submit
                 </Button>
