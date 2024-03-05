@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 
 const Cart = () => {
-    const [isValid, setIsValid] = useState(false);
+    const [formValues, setFormValues] = useState(null);
     const cards = [
         {
             image: "https://www.bottega7.com/media/filer_public_thumbnails/filer_public/f5/98/f5986e4f-b733-4ab8-aa3b-0d474d257464/copertina_img-theme-park_v2.jpg__1200x700_q100_crop_subsampling-2_upscale.jpg",
@@ -22,14 +22,17 @@ const Cart = () => {
         },
     ];
 
-    const handleFormChanges = (isValid: boolean) => {
-        console.log(isValid);
-        if (isValid) {
-            setIsValid(true)
+    const handleFormChanges = (values: any) => {
+        if (values) {
+            setFormValues(values)
         } else {
-            setIsValid(false)
+            setFormValues(null)
         }
     };
+
+    const sendForm = () => {
+        console.log(formValues)
+    }
 
     return (
         <section className='cart'>
@@ -43,7 +46,7 @@ const Cart = () => {
             </div>
             <div className='cart__total'>
                 <p className='total'>Total price: 900</p>
-                <Button sx={{ fontSize: "14px" }} disabled={!isValid} variant='contained' color='primary'>
+                <Button onClick={sendForm} sx={{ fontSize: "14px" }} disabled={!formValues} variant='contained' color='primary'>
                     Submit
                 </Button>
             </div>

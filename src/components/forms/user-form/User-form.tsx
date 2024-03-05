@@ -11,13 +11,13 @@ const UserForm = ({handleFormChanges}: any) => {
         address: Yup.string().required("Address is required"),
     });
 
-    const onFormChanges = (isValid: boolean) => {
+    const onFormChanges = (isValid: any) => {
         handleFormChanges(isValid)
     }
 
     return (
         <div>
-            <Typography variant='h2' sx={{ marginBottom: "10px" }}>
+            <Typography variant='h2' sx={{ marginBottom: "30px" }}>
                 User Form
             </Typography>
             <Formik
@@ -38,10 +38,11 @@ const UserForm = ({handleFormChanges}: any) => {
                     validationSchema
                         .validate(values, { abortEarly: false })
                         .then(() => {
-                            onFormChanges(true); 
+                            onFormChanges(values); 
+                            // console.log(values)
                         })
                         .catch((validationErrors) => {
-                            onFormChanges(false); 
+                            onFormChanges(null); 
                         })
                     return errors;
                 }}

@@ -1,29 +1,38 @@
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
 import "./SideBar.sass";
 
-const SideBar = () => {
-    // Масив із назвами аптек
-    const pharmacies = ["Pharmacy 1", "Pharmacy 2", "Pharmacy 3", "Pharmacy 4"];
+interface SideBarCard {
+    name: string;
+    id: string;
+}
 
+interface SideBarProps {
+    cards: SideBarCard[];
+}
+
+const SideBar: React.FC<SideBarProps> = ({ cards }) => {
     return (
         <>
             <Typography variant='h4' gutterBottom textAlign='center'>
                 Shops:
             </Typography>
             <List>
-                {/* Проходження по масиву назв аптек та створення елементів списку */}
-                {pharmacies.map((pharmacy, index) => (
-                    <ListItem key={index}>
-                        {/* Використання стилів для тексту назв аптек */}
-                        <ListItemText
-                            primary={
-                                <Typography variant='h3' textAlign='center'>
-                                    {pharmacy}
-                                </Typography>
-                            }
-                        />
-                    </ListItem>
-                ))}
+                {cards && cards.length > 0
+                    ? cards.map((card: SideBarCard, index: number) => (
+                          <ListItem
+                              key={card.id}
+                              sx={{ cursor: "pointer", "&:hover": { backgroundColor: "lightgray" } }}
+                          >
+                              <ListItemText
+                                  primary={
+                                      <Typography variant='h4' textAlign='center'>
+                                          {card.name}
+                                      </Typography>
+                                  }
+                              />
+                          </ListItem>
+                      ))
+                    : null}
             </List>
         </>
     );
