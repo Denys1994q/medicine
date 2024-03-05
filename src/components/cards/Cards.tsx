@@ -8,21 +8,24 @@ interface CardsProps {
     isFlex?: boolean;
     isCartBtn?: boolean;
     isQuantityBtn?: boolean;
+    addToCartClick?: (card: any) => void
 }
 
-const Cards: React.FC<CardsProps> = ({ cards, cardWidth, isCartBtn, isQuantityBtn, isFlex }) => {
+const Cards: React.FC<CardsProps> = ({ cards, cardWidth, addToCartClick, isCartBtn, isQuantityBtn, isFlex }) => {
     return (
         <List className={isFlex ? "cards-list--flex cards-list" : "cards-list"}>
             {cards.length > 0 ? (
                 cards.map((card, index) => (
                     <ListItem key={index} sx={{ width: cardWidth }}>
                         <ProductCard
+                            id={card._id}
                             title={card.name}
                             image={card.image}
                             price={card.price ? card.price : null}
                             isFlex={isFlex}
                             isQuantityBtn={isQuantityBtn}
                             isCartBtn={isCartBtn}
+                            onAddToCart={addToCartClick ? () => addToCartClick(card) : undefined}
                         />
                     </ListItem>
                 ))

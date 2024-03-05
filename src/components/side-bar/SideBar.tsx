@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
 import "./SideBar.sass";
 
@@ -9,17 +9,24 @@ interface SideBarCard {
 
 interface SideBarProps {
     cards: SideBarCard[];
+    isFirstActive?: boolean;
     onItemClick?: (id: string) => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ cards, onItemClick }) => {
+const SideBar: React.FC<SideBarProps> = ({ cards, isFirstActive, onItemClick }) => {
     const [activeItemId, setActiveItemId] = useState<string | null>(null); // Стан для зберігання id активного елементу
+
+    useEffect(() => {
+        if (isFirstActive && cards && cards.length > 0) {
+            setActiveItemId(cards[0]._id);
+        }
+    }, [cards]);
 
     const handleClick = (id: string) => {
         if (onItemClick) {
             onItemClick(id);
         }
-        setActiveItemId(id); // Оновлення стану активного елементу
+        setActiveItemId(id);
     };
 
     return (
@@ -36,7 +43,7 @@ const SideBar: React.FC<SideBarProps> = ({ cards, onItemClick }) => {
                               sx={{
                                   cursor: "pointer",
                                   "&:hover": { backgroundColor: "lightgray" },
-                                  backgroundColor: activeItemId === card._id ? "lightblue" : "inherit", 
+                                  backgroundColor: activeItemId === card._id ? "lightblue" : "inherit",
                               }}
                           >
                               <ListItemText
