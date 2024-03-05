@@ -36,7 +36,7 @@ const TextInput: React.FC<InputProps> = ({
                     sx: { fontSize: "14px" },
                 }}
             />
-            <Box sx={{ padding: "5px", lineHeight: 1, color: "red" }}>
+            <Box sx={{ padding: "10px", lineHeight: 1, color: "red" }}>
                 <ErrorMessage name={name} component='div' />
             </Box>
         </Box>

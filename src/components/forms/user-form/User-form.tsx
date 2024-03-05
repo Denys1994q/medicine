@@ -1,16 +1,19 @@
-import React from "react";
 import { Formik, Form } from "formik";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import * as Yup from "yup";
 import TextInput from "../../inputs/text-input/Text-input";
 
-const UserForm = () => {
+const UserForm = ({handleFormChanges}: any) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         email: Yup.string().email("Invalid email address").required("Email is required"),
         phone: Yup.string().required("Phone is required"),
         address: Yup.string().required("Address is required"),
     });
+
+    const onFormChanges = (isValid: boolean) => {
+        handleFormChanges(isValid)
+    }
 
     return (
         <div>
@@ -26,8 +29,21 @@ const UserForm = () => {
                 }}
                 validationSchema={validationSchema}
                 validateOnMount={true}
+                validateOnChange={true}
                 onSubmit={values => {
                     console.log(values);
+                }}
+                validate={(values) => {
+                    const errors = {};
+                    validationSchema
+                        .validate(values, { abortEarly: false })
+                        .then(() => {
+                            onFormChanges(true); 
+                        })
+                        .catch((validationErrors) => {
+                            onFormChanges(false); 
+                        })
+                    return errors;
                 }}
             >
                 {({ isValid }) => (
@@ -36,14 +52,6 @@ const UserForm = () => {
                         <TextInput type='email' name='email' label='Email' />
                         <TextInput type='text' name='phone' label='Phone' />
                         <TextInput type='text' name='address' label='Address' multiline />
-                        <Button
-                            type='submit'
-                            sx={{ fontSize: "14px" }}
-                            disabled={!isValid}
-                            variant='contained'
-                            color='primary'>
-                            Submit
-                        </Button>
                     </Form>
                 )}
             </Formik>
