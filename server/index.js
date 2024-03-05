@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import { ShopsController, MedicineController } from "./controllers/index.js";
 
 const app = express();
 app.use(express.json());
@@ -15,11 +16,14 @@ app.use(cors(corsOptions));
 dotenv.config();
 
 mongoose
-    .connect(
-        `mongodb+srv://Denys1994:pp74tvVguAJTZZa@cluster0.l8hygki.mongodb.net/bicycles-db?retryWrites=true&w=majority`
-    )
+    .connect(process.env.MONGO_URI)
     .then(() => console.log("DB Ok"))
     .catch(err => console.log("ERROR", err));
+
+// get all shops
+app.get("/shops", ShopsController.getAllShops);
+// get shop medicines
+app.get("/medicines/:shop_id", MedicineController.getShopMedicines);
 
 app.listen("4444", err => {
     if (err) {
