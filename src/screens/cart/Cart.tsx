@@ -24,7 +24,7 @@ const Cart = () => {
                 <UserForm />
             </div>
             <div className='cart__cards'>
-                <Cards cards={cards} cardWidth={600} isFlex />
+                <Cards cards={cards} cardWidth={600} isFlex isQuantityBtn />
             </div>
         </div>
     );
