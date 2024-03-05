@@ -15,11 +15,27 @@ export const getAllShops = createAsyncThunk(
     }
 );
 
+export const getOneShopMedicines = createAsyncThunk(
+    "shops/getOneShopMedicines",
+    async ({id}: any) => {
+      const response = await fetch(`http://localhost:4444/medicines/${id}`);
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData[0].msg || 'Failed to get shops list');
+      }
+  
+      const data = await response.json();
+      return data;
+    }
+);
+
 
 const initialState: any = {
     shops: [],
     getAllShopsLoading: false,
-    getAllShopsError: false
+    getAllShopsError: false,
+    shopMedicines: []
 };
 
 const ShopsSlice = createSlice({
@@ -48,6 +64,10 @@ const ShopsSlice = createSlice({
                     // state.createNewBicycleErrorMsg = 'An error occurred';
                     state.createNewBicycleLoading = false;
                 }
+            })
+            // get one shop medicines
+            .addCase(getOneShopMedicines.fulfilled, (state, action) => {
+                state.shopMedicines = action.payload
             })
     }
   });
