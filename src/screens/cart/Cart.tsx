@@ -4,27 +4,12 @@ import Cards from "../../components/cards/Cards";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { removeFromCart } from "../../store/slices/cart";
 
 const Cart = () => {
     const [formValues, setFormValues] = useState(null);
     const dispatch = useAppDispatch();
     const cartProds = useAppSelector(store => store.cart.products);
-
-    const cards = [
-        {
-            image: "https://www.bottega7.com/media/filer_public_thumbnails/filer_public/f5/98/f5986e4f-b733-4ab8-aa3b-0d474d257464/copertina_img-theme-park_v2.jpg__1200x700_q100_crop_subsampling-2_upscale.jpg",
-            title: "Paracetamol",
-            price: 200,
-        },
-        {
-            image: "https://www.bottega7.com/media/filer_public_thumbnails/filer_public/f5/98/f5986e4f-b733-4ab8-aa3b-0d474d257464/copertina_img-theme-park_v2.jpg__1200x700_q100_crop_subsampling-2_upscale.jpg",
-            title: "Paracetamol",
-        },
-        {
-            image: "https://www.bottega7.com/media/filer_public_thumbnails/filer_public/f5/98/f5986e4f-b733-4ab8-aa3b-0d474d257464/copertina_img-theme-park_v2.jpg__1200x700_q100_crop_subsampling-2_upscale.jpg",
-            title: "Paracetamol",
-        },
-    ];
 
     const handleFormChanges = (values: any) => {
         if (values) {
@@ -38,6 +23,11 @@ const Cart = () => {
         console.log(formValues)
     }
 
+    const handleCardDelete = (id: string) => {
+        console.log(id)
+        dispatch(removeFromCart(id))
+    }
+
     return (
         <section className='cart'>
             <div className='cart__main'>
@@ -45,7 +35,12 @@ const Cart = () => {
                     <UserForm handleFormChanges={handleFormChanges} />
                 </div>
                 <div className='cart__cards'>
-                    <Cards cards={cartProds} cardWidth={600} isFlex isQuantityBtn />
+                    <Cards 
+                        cards={cartProds} 
+                        cardWidth={600} 
+                        onDeleteClick={handleCardDelete}
+                        isFlex 
+                        isQuantityBtn />
                 </div>
             </div>
             <div className='cart__total'>

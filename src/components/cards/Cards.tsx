@@ -9,9 +9,10 @@ interface CardsProps {
     isCartBtn?: boolean;
     isQuantityBtn?: boolean;
     addToCartClick?: (card: any) => void
+    onDeleteClick?: (id: string) => void
 }
 
-const Cards: React.FC<CardsProps> = ({ cards, cardWidth, addToCartClick, isCartBtn, isQuantityBtn, isFlex }) => {
+const Cards: React.FC<CardsProps> = ({ cards, onDeleteClick, cardWidth, addToCartClick, isCartBtn, isQuantityBtn, isFlex }) => {
     return (
         <List className={isFlex ? "cards-list--flex cards-list" : "cards-list"}>
             {cards.length > 0 ? (
@@ -26,6 +27,7 @@ const Cards: React.FC<CardsProps> = ({ cards, cardWidth, addToCartClick, isCartB
                             isQuantityBtn={isQuantityBtn}
                             isCartBtn={isCartBtn}
                             onAddToCart={addToCartClick ? () => addToCartClick(card) : undefined}
+                            onDelete={onDeleteClick}
                         />
                     </ListItem>
                 ))
