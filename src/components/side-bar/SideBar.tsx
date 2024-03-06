@@ -14,13 +14,13 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ cards, isFirstActive, onItemClick }) => {
-    const [activeItemId, setActiveItemId] = useState<string | null>(null); // Стан для зберігання id активного елементу
+    const [activeItemId, setActiveItemId] = useState<string | null>(null); 
 
     useEffect(() => {
         if (isFirstActive && cards && cards.length > 0) {
             setActiveItemId(cards[0]._id);
         }
-    }, [cards]);
+    }, []);
 
     const handleClick = (id: string) => {
         if (onItemClick) {
@@ -44,8 +44,7 @@ const SideBar: React.FC<SideBarProps> = ({ cards, isFirstActive, onItemClick }) 
                                   cursor: "pointer",
                                   "&:hover": { backgroundColor: "lightgray" },
                                   backgroundColor: activeItemId === card._id ? "lightblue" : "inherit",
-                              }}
-                          >
+                              }} >
                               <ListItemText
                                   primary={
                                       <Typography variant='h4' textAlign='center'>

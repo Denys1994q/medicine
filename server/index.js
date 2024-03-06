@@ -2,7 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import { ShopsController, MedicineController } from "./controllers/index.js";
+import { ShopsController, MedicineController, OrdersController } from "./controllers/index.js";
+import { createOrderValidation } from "./validation/validation.js";
+import handleValidationErrors from "./utils/handleValidationErrors.js";
 
 const app = express();
 app.use(express.json());
@@ -24,6 +26,8 @@ mongoose
 app.get("/shops", ShopsController.getAllShops);
 // get shop medicines
 app.get("/medicines/:shop_id", MedicineController.getShopMedicines);
+// create an order
+app.post("/orders", createOrderValidation, handleValidationErrors, OrdersController.createOrder);
 
 app.listen("4444", err => {
     if (err) {

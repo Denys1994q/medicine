@@ -35,13 +35,18 @@ const initialState: any = {
     shops: [],
     getAllShopsLoading: false,
     getAllShopsError: false,
-    shopMedicines: []
+    activeShopId: ''
+    // shopMedicines: []
 };
 
 const ShopsSlice = createSlice({
     name: "shops",
     initialState,
-    reducers: {},
+    reducers: {
+        setActiveShopId: (state, action) => {
+            state.activeShopId = action.payload;
+        }
+    },
     extraReducers: builder => {
         builder 
         // get shops list
@@ -51,6 +56,7 @@ const ShopsSlice = createSlice({
             })
             .addCase(getAllShops.fulfilled, (state, action) => {
                 state.shops = action.payload;
+                state.activeShopId = action.payload[0]._id;
                 state.getAllShopsLoading = false;
                 state.getAllShopsError = false;
             })
@@ -66,8 +72,17 @@ const ShopsSlice = createSlice({
                 }
             })
             // get one shop medicines
+            // .addCase(getOneShopMedicines.fulfilled, (state, action) => {
+            //     state.shopMedicines = action.payload
+            // })
             .addCase(getOneShopMedicines.fulfilled, (state, action) => {
-                state.shopMedicines = action.payload
+                const medicines = action.payload; 
+                const shopId = medicines[0].shop_id
+                const shopIndex = state.shops.findIndex((shop: any) => shop._id === shopId);
+                if (shopIndex !== -1) {
+                    state.shops[shopIndex].medicines = medicines;
+                }
+                state.activeShopId = shopId
             })
     }
   });
@@ -76,4 +91,4 @@ const { actions, reducer } = ShopsSlice;
 
 export default reducer;
 
-export const {} = actions;
+export const {setActiveShopId} = actions;

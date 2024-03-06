@@ -2,7 +2,7 @@ import "./Cart.sass";
 import UserForm from "../../components/forms/user-form/User-form";
 import Cards from "../../components/cards/Cards";
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { removeFromCart, updateQuantity } from "../../store/slices/cart";
 
@@ -10,7 +10,6 @@ const Cart = () => {
     const [formValues, setFormValues] = useState(null);
     const dispatch = useAppDispatch();
     const cartProds = useAppSelector(store => store.cart.products);
-    const [total, setTotal] = useState(0)
 
     const handleFormChanges = (values: any) => {
         if (values) {
@@ -31,6 +30,12 @@ const Cart = () => {
     const handleQuantityChange = (productId: string, newQuantity: number) => {
         dispatch(updateQuantity({productId, newQuantity}))
     }
+
+    const total = useMemo(() => {
+        return cartProds.reduce((acc: number, item: any) => {
+            return acc + item.price * item.quantity;
+        }, 0);
+    }, [cartProds]);
 
     return (
         <section className='cart'>

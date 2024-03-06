@@ -12,10 +12,8 @@ const cartSlice = createSlice({
             const productToAdd = action.payload;
             const existingProductIndex = state.products.findIndex((product: any) => product._id === productToAdd._id);
             if (existingProductIndex !== -1) {
-                // Якщо товар вже є у корзині, збільшуємо кількість на один
                 state.products[existingProductIndex].quantity++;
             } else {
-                // Якщо товару немає у корзині, додаємо новий екземпляр
                 state.products.push({ ...productToAdd, quantity: 1 });
             }
             localStorage.setItem("cartProducts", JSON.stringify(state.products));

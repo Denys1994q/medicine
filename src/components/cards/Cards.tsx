@@ -25,7 +25,7 @@ const Cards: React.FC<CardsProps> = ({
 }) => {
     return (
         <List className={isFlex ? "cards-list--flex cards-list" : "cards-list"}>
-            {cards.length > 0 ? (
+            {cards && cards.length > 0 ? (
                 cards.map((card, index) => (
                     <ListItem key={index} sx={{ width: cardWidth }}>
                         <ProductCard
