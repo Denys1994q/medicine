@@ -8,7 +8,7 @@ import { removeFromCart, updateQuantity, createOrder } from "../../store/slices/
 import { useNavigate  } from "react-router-dom";
 import Alert from "../../components/alert/Alert";
 
-const Cart = () => {
+const Cart: React.FC = () => {
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState<any>(null);
     const dispatch = useAppDispatch();

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../store/hooks";
 import { resetOrderStatus } from "../../store/slices/cart";
 
-const OrderConfirmed = () => {
+const OrderConfirmed: React.FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {

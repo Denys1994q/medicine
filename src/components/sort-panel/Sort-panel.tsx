@@ -1,8 +1,13 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-const SortPanel = ({sortOrder, setSortOrder }: any) => {
+interface SortPanelProps {
+    sortOrder: "asc" | "desc" | "";
+    setSortOrder: (val: "asc" | "desc") => void;
+}
+
+const SortPanel: React.FC<SortPanelProps> = ({ sortOrder, setSortOrder }) => {
     return (
-        <FormControl variant="standard" sx={{ minWidth: 130 }}>
+        <FormControl variant='standard' sx={{ minWidth: 130 }}>
             <InputLabel sx={{ fontSize: "14px" }} id='sortOrderLabel'>
                 Sort by Price:
             </InputLabel>

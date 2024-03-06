@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Button, Box, Typography } from "@mui/material";
 
-const QuantityBtn = ({ onQuantityBtnChange, startValue = 1 }: any) => {
+interface QuantityBtnProps {
+    onQuantityBtnChange: (quantity: number) => void,
+    startValue?: number
+}
+
+const QuantityBtn: React.FC<QuantityBtnProps> = ({ onQuantityBtnChange, startValue = 1 }) => {
     const [quantity, setQuantity] = useState(startValue);
 
     const handleIncrement = () => {

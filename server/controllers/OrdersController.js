@@ -29,3 +29,18 @@ export const createOrder = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+export const getUserOrders = async (req, res) => {
+    try {
+        const { userEmail } = req.params;
+        const userOrders = await Order.find({ userEmail });
+        console.log(userEmail);
+        if (userOrders.length === 0) {
+            return res.status(404).json({ message: "No orders found for the user" });
+        }
+        res.status(200).json(userOrders);
+    } catch (err) {
+        console.error("Error fetching user orders:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};

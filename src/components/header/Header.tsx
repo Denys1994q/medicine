@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Badge from "@mui/material/Badge";
 import { useAppSelector } from "../../store/hooks";
 
-const Header = () => {
+const Header: React.FC = () => {
     const products = useAppSelector(store => store.cart.products);
     const itemsInCart = products.reduce((acc: any, item: any) => acc + item.quantity, 0);
 
@@ -13,10 +13,10 @@ const Header = () => {
         <AppBar position='static'>
             <Toolbar>
                 <ul className='header__list'>
-                    <li>
+                    <li className="header__list-item">
                         <Link to='/'>Shop</Link>
                     </li>
-                    <li>
+                    <li className="header__list-item">
                         <Link to='/cart'>
                             <Badge
                                 badgeContent={itemsInCart}
@@ -26,6 +26,9 @@ const Header = () => {
                                 Shopping Cart
                             </Badge>
                         </Link>
+                    </li>
+                    <li>
+                        <Link to='/history'>History</Link>
                     </li>
                 </ul>
             </Toolbar>

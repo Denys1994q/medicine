@@ -4,7 +4,7 @@ import ProductCard from "../card/ProductCard";
 
 interface CardsProps {
     cards: any[];
-    cardWidth: number;
+    cardWidth?: number;
     isFlex?: boolean;
     isCartBtn?: boolean;
     isQuantityBtn?: boolean;
@@ -16,7 +16,7 @@ interface CardsProps {
 const Cards: React.FC<CardsProps> = ({
     cards,
     onDeleteClick,
-    cardWidth,
+    cardWidth = 250,
     addToCartClick,
     onQuantityChangeClick,
     isCartBtn,

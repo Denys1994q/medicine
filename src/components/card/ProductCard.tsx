@@ -2,7 +2,21 @@ import { Card, CardContent, CardMedia, Typography, Button } from "@mui/material"
 import "./ProductCard.sass";
 import QuantityBtn from "../quantity-btn/Quantity-btn";
 
-const ProductCard = ({
+interface ProductCard {
+    image: string;
+    id: string;
+    title: string;
+    startQuantity?: number;
+    price?: number;
+    isCartBtn?: boolean;
+    isQuantityBtn?: boolean;
+    isFlex?: boolean;
+    onAddToCart?: () => void;
+    onDelete?: (id: string) => void;
+    onQuantityChange?: (id: string, quantity: number) => void;
+}
+
+const ProductCard: React.FC<ProductCard> = ({
     image,
     id,
     title,
@@ -14,7 +28,7 @@ const ProductCard = ({
     isCartBtn,
     isQuantityBtn,
     isFlex,
-}: any) => {
+}) => {
     const handleClick = () => {
         if (onAddToCart) {
             onAddToCart();

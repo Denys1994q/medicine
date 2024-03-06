@@ -28,6 +28,8 @@ app.get("/shops", ShopsController.getAllShops);
 app.get("/medicines/:shop_id", MedicineController.getShopMedicines);
 // create an order
 app.post("/orders", createOrderValidation, handleValidationErrors, OrdersController.createOrder);
+// get user orders history
+app.get("/userOrders/:userEmail", OrdersController.getUserOrders);
 
 app.listen("4444", err => {
     if (err) {

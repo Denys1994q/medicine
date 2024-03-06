@@ -1,5 +1,20 @@
 .header__list
     display: flex
-    gap: 20px
+    gap: 60px
     align-items: center
     font-size: 18px
+    list-style: none
+
+.header__list-item
+    position: relative
+    &:not(:last-child)::after
+        content: ""
+        display: block
+        width: 2px
+        height: 20px
+        background-color: white
+        margin-left: 10px
+        border-left: 2px solid white
+        position: absolute
+        top: 0
+        right: -30px

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
 import "./SideBar.sass";
 
@@ -15,19 +14,11 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ cards, isFirstActive, activeItemId, onItemClick }) => {
-    // const [activeItemId, setActiveItemId] = useState<string | null>(null); 
-
-    // useEffect(() => {
-    //     if (isFirstActive && cards && cards.length > 0) {
-    //         setActiveItemId(cards[0]._id);
-    //     }
-    // }, []);
 
     const handleClick = (id: string) => {
         if (onItemClick) {
             onItemClick(id);
         }
-        // setActiveItemId(id);
     };
 
     return (

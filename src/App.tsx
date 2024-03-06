@@ -5,6 +5,7 @@ import Cart from "./screens/cart/Cart";
 import Header from "./components/header/Header";
 import OrderConfirmed from "./screens/order-confirmed/Order-confirmed";
 import NotFound from "./screens/not-found/NotFound";
+import History from "./screens/history/History";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/cart' element={<Cart />} />
                     <Route path='/order-confirmed' element={<OrderConfirmed />} />
+                    <Route path='/history' element={<History />} />
                     <Route path='*' element={<NotFound />} />
                 </Routes>
             </main>

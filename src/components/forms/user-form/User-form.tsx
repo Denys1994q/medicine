@@ -3,7 +3,11 @@ import { Typography } from "@mui/material";
 import * as Yup from "yup";
 import TextInput from "../../inputs/text-input/Text-input";
 
-const UserForm = ({handleFormChanges}: any) => {
+interface UserForm {
+    handleFormChanges: (values: any) => void
+}
+
+const UserForm: React.FC<UserForm> = ({handleFormChanges}) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -11,8 +15,8 @@ const UserForm = ({handleFormChanges}: any) => {
         address: Yup.string().required("Address is required"),
     });
 
-    const onFormChanges = (isValid: any) => {
-        handleFormChanges(isValid)
+    const onFormChanges = (values: any) => {
+        handleFormChanges(values)
     }
 
     return (

@@ -10,7 +10,7 @@ import SortPanel from "../../components/sort-panel/Sort-panel";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 
-const Home = () => {
+const Home: React.FC = () => {
     const dispatch = useAppDispatch();
     const shops = useAppSelector(store => store.shops.shops);
     const shopsErr = useAppSelector(store => store.shops.getAllShopsError);
