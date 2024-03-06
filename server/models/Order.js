@@ -21,7 +21,7 @@ const OrderSchema = new mongoose.Schema({
         {
             productId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Product", // Посилання на модель товару, якщо потрібно
+                ref: "Product", 
                 required: true,
             },
             quantity: {

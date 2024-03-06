@@ -2,15 +2,16 @@
     padding: 10px
     &__main
         display: flex
-        align-items: center
-        gap: 10px
+        flex-wrap: wrap
+        justify-content: space-between
+        gap: 30px
     &__form
-        width: 800px
+        width: 40%
         // background: green
     &__cards
+        width: 50%
         // background: red
-        flex-grow: 1
-        max-height: 72vh
+        height: 72vh
         overflow-y: auto
     &__total
         margin-top: 20px

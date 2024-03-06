@@ -4,13 +4,16 @@ import Cards from "../../components/cards/Cards";
 import { Button } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { removeFromCart, updateQuantity } from "../../store/slices/cart";
+import { removeFromCart, updateQuantity, createOrder } from "../../store/slices/cart";
+import { useNavigate  } from "react-router-dom";
 
 const Cart = () => {
-    const [formValues, setFormValues] = useState(null);
+    const navigate = useNavigate();
+    const [formValues, setFormValues] = useState<any>(null);
     const dispatch = useAppDispatch();
     const cartProds = useAppSelector(store => store.cart.products);
-
+    const orderIsConfirmed = useAppSelector(store => store.cart.orderIsConfirmed);
+    
     const handleFormChanges = (values: any) => {
         if (values) {
             setFormValues(values)
@@ -20,7 +23,23 @@ const Cart = () => {
     };
 
     const sendForm = () => {
-        console.log(formValues)
+        if (formValues) {
+            const items = cartProds.map((prod: any) => {
+                return {
+                    productId: prod._id, 
+                    quantity: prod.quantity
+                }
+            })
+            const order = {
+                userName: formValues.name,
+                userEmail: formValues.email,
+                userPhone: formValues.phone,
+                userAddress: formValues.address,
+                items,
+                totalPrice: total
+            }
+            dispatch(createOrder({order}))
+        }
     }
 
     const handleCardDelete = (id: string) => {
@@ -30,6 +49,12 @@ const Cart = () => {
     const handleQuantityChange = (productId: string, newQuantity: number) => {
         dispatch(updateQuantity({productId, newQuantity}))
     }
+
+    useEffect(() => {
+        if (orderIsConfirmed) {
+            navigate('/order-confirmed')
+        }
+    }, [orderIsConfirmed])
 
     const total = useMemo(() => {
         return cartProds.reduce((acc: number, item: any) => {
@@ -55,7 +80,12 @@ const Cart = () => {
             </div>
             <div className='cart__total'>
                 <p className='total'>Total price: {total} грн. </p>
-                <Button onClick={sendForm} sx={{ fontSize: "14px" }} disabled={!formValues} variant='contained' color='primary'>
+                <Button 
+                    onClick={sendForm} 
+                    sx={{ fontSize: "14px" }} 
+                    disabled={!formValues || cartProds.length === 0} 
+                    variant='contained' 
+                    color='primary'>
                     Submit
                 </Button>
             </div>
