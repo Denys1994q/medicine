@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { addToCart } from "../../store/slices/cart";
 import Alert from "../../components/alert/Alert";
 import SortPanel from "../../components/sort-panel/Sort-panel";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const Home = () => {
     const dispatch = useAppDispatch();
@@ -32,7 +34,7 @@ const Home = () => {
 
     useEffect(() => {
         if (activeShopId) {
-            setSortOrder('')
+            setSortOrder("");
             dispatch(getOneShopMedicines({ id: activeShopId }));
         }
     }, [activeShopId]);
@@ -58,36 +60,45 @@ const Home = () => {
             : null;
 
     return (
-        <div className='home'>
-            <div className='home__sidebar'>
-                {shops && shops.length > 0 ? (
-                    <SideBar cards={shops} activeItemId={activeShopId} onItemClick={handleSideBarClick} isFirstActive />
-                ) : null}
-            </div>
-            <div className='home__cards'>
-                {!activeShopId && <h2>Please select a shop.</h2>}
-                {medicinesLoading && "Loading"}
-                {medicines && medicines.length > 0 && (
-                    <>
-                        <div className="sort-panel">
-                           <SortPanel sortOrder={sortOrder} setSortOrder={setSortOrder} />
-                        </div>
-                        <Cards
-                            cards={sortedMedicines ? sortedMedicines : medicines}
-                            cardWidth={300}
-                            addToCartClick={handleAddToCartClick}
-                            isCartBtn
+        <>
+            <Box sx={{position: 'fixed', top: 60, left: 0, width: "100%", marginTop: '5px' }}>
+                {medicinesLoading && <LinearProgress />}
+            </Box>
+            <div className='home'>
+                <div className='home__sidebar'>
+                    {shops && shops.length > 0 ? (
+                        <SideBar
+                            cards={shops}
+                            activeItemId={activeShopId}
+                            onItemClick={handleSideBarClick}
+                            isFirstActive
                         />
-                    </>
-                )}
+                    ) : null}
+                </div>
+                <div className='home__cards'>
+                    {!activeShopId && <h2>Please select a shop.</h2>}
+                    {medicines && medicines.length > 0 && (
+                        <>
+                            <div className='sort-panel'>
+                                <SortPanel sortOrder={sortOrder} setSortOrder={setSortOrder} />
+                            </div>
+                            <Cards
+                                cards={sortedMedicines ? sortedMedicines : medicines}
+                                cardWidth={300}
+                                addToCartClick={handleAddToCartClick}
+                                isCartBtn
+                            />
+                        </>
+                    )}
+                </div>
+                <Alert
+                    open={alertIsOpen}
+                    message={"Sorry, smth is wrong. Try later"}
+                    severity='error'
+                    onClose={() => setAlertIsOpen(false)}
+                />
             </div>
-            <Alert
-                open={alertIsOpen}
-                message={"Sorry, smth is wrong. Try later"}
-                severity='error'
-                onClose={() => setAlertIsOpen(false)}
-            />
-        </div>
+        </>
     );
 };
 
