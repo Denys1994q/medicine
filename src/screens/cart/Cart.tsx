@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { removeFromCart, updateQuantity, createOrder } from "../../store/slices/cart";
 import { useNavigate  } from "react-router-dom";
+import Alert from "../../components/alert/Alert";
 
 const Cart = () => {
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ const Cart = () => {
     const dispatch = useAppDispatch();
     const cartProds = useAppSelector(store => store.cart.products);
     const orderIsConfirmed = useAppSelector(store => store.cart.orderIsConfirmed);
+    const createOrderError = useAppSelector(store => store.cart.createOrderError);
+    const [alertIsOpen, setAlertIsOpen] = useState(false);
     
     const handleFormChanges = (values: any) => {
         if (values) {
@@ -62,6 +65,14 @@ const Cart = () => {
         }, 0);
     }, [cartProds]);
 
+    useEffect(() => {
+        if (createOrderError) {
+            setAlertIsOpen(true);
+        } else {
+            setAlertIsOpen(false);
+        }
+    }, [createOrderError])
+
     return (
         <section className='cart'>
             <div className='cart__main'>
@@ -89,6 +100,12 @@ const Cart = () => {
                     Submit
                 </Button>
             </div>
+            <Alert
+                open={alertIsOpen}
+                message={"Sorry, smth is wrong. Try later"}
+                severity='error'
+                onClose={() => setAlertIsOpen(false)}
+            />
         </section>
     );
 };

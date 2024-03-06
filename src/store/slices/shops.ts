@@ -35,8 +35,9 @@ const initialState: any = {
     shops: [],
     getAllShopsLoading: false,
     getAllShopsError: false,
-    activeShopId: ''
-    // shopMedicines: []
+    activeShopId: '',
+    getOneShopMedicinesLoading: false,
+    getOneShopMedicinesError: false
 };
 
 const ShopsSlice = createSlice({
@@ -56,25 +57,24 @@ const ShopsSlice = createSlice({
             })
             .addCase(getAllShops.fulfilled, (state, action) => {
                 state.shops = action.payload;
-                state.activeShopId = action.payload[0]._id;
+                // state.activeShopId = action.payload[0]._id;
                 state.getAllShopsLoading = false;
                 state.getAllShopsError = false;
             })
             .addCase(getAllShops.rejected, (state, action) => {
                 if (action.error.message) {
                     state.getAllShopsError = true;
-                    // state.createNewBicycleErrorMsg = action.error.message;
                     state.getAllShopsLoading = false;
                 } else {
                     state.getAllShopsError = true;
-                    // state.createNewBicycleErrorMsg = 'An error occurred';
                     state.createNewBicycleLoading = false;
                 }
             })
             // get one shop medicines
-            // .addCase(getOneShopMedicines.fulfilled, (state, action) => {
-            //     state.shopMedicines = action.payload
-            // })
+            .addCase(getOneShopMedicines.pending, (state) => {
+                state.getOneShopMedicinesLoading = true
+                state.getOneShopMedicinesError = false
+            })
             .addCase(getOneShopMedicines.fulfilled, (state, action) => {
                 const medicines = action.payload; 
                 const shopId = medicines[0].shop_id
@@ -83,6 +83,12 @@ const ShopsSlice = createSlice({
                     state.shops[shopIndex].medicines = medicines;
                 }
                 state.activeShopId = shopId
+                state.getOneShopMedicinesLoading = false
+                state.getOneShopMedicinesError = false
+            })
+            .addCase(getOneShopMedicines.rejected, (state, action) => {
+                state.getOneShopMedicinesLoading = false
+                state.getOneShopMedicinesError = true
             })
     }
   });

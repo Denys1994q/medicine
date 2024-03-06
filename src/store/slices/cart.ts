@@ -23,7 +23,8 @@ export const createOrder = createAsyncThunk(
 
 const initialState: any = {
     products: JSON.parse(localStorage.getItem("cartProducts") || "[]"),
-    orderIsConfirmed: false
+    orderIsConfirmed: false,
+    createOrderError: false
 };
 
 const cartSlice = createSlice({
@@ -61,13 +62,16 @@ const cartSlice = createSlice({
         builder 
         // create order
             .addCase(createOrder.pending, state => {
-                // state.getAllShopsLoading = true;
-                // state.getAllShopsError = false;
+                state.createOrderError = false
             })
             .addCase(createOrder.fulfilled, (state, action) => {
                 state.products = [];
                 localStorage.removeItem('cartProducts')
                 state.orderIsConfirmed = true
+                state.createOrderError = false
+            })
+            .addCase(createOrder.rejected, state => {
+                state.createOrderError = true
             })
     }
 });

@@ -10,23 +10,24 @@ interface SideBarCard {
 interface SideBarProps {
     cards: SideBarCard[];
     isFirstActive?: boolean;
+    activeItemId: string,
     onItemClick?: (id: string) => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ cards, isFirstActive, onItemClick }) => {
-    const [activeItemId, setActiveItemId] = useState<string | null>(null); 
+const SideBar: React.FC<SideBarProps> = ({ cards, isFirstActive, activeItemId, onItemClick }) => {
+    // const [activeItemId, setActiveItemId] = useState<string | null>(null); 
 
-    useEffect(() => {
-        if (isFirstActive && cards && cards.length > 0) {
-            setActiveItemId(cards[0]._id);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (isFirstActive && cards && cards.length > 0) {
+    //         setActiveItemId(cards[0]._id);
+    //     }
+    // }, []);
 
     const handleClick = (id: string) => {
         if (onItemClick) {
             onItemClick(id);
         }
-        setActiveItemId(id);
+        // setActiveItemId(id);
     };
 
     return (

@@ -44,7 +44,7 @@ const Cards: React.FC<CardsProps> = ({
                     </ListItem>
                 ))
             ) : (
-                <Typography variant='body1' component='p' sx={{ fontSize: "16px" }}>
+                <Typography variant='body2' component='p' sx={{ fontSize: "16px" }}>
                     Nothing found
                 </Typography>
             )}
