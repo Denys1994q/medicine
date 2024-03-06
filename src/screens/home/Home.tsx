@@ -93,7 +93,7 @@ const Home: React.FC = () => {
                 </div>
                 <Alert
                     open={alertIsOpen}
-                    message={"Sorry, smth is wrong. Try later"}
+                    message={shopsErr}
                     severity='error'
                     onClose={() => setAlertIsOpen(false)}
                 />

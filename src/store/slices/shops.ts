@@ -3,30 +3,26 @@ import { createSlice, createAsyncThunk  } from "@reduxjs/toolkit";
 export const getAllShops = createAsyncThunk(
     "shops/getAllShops",
     async () => {
-      const response = await fetch("http://localhost:4444/shops");
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData[0].msg || 'Failed to get shops list');
-      }
-  
-      const data = await response.json();
-      return data;
+        const response = await fetch("http://localhost:4444/shops");
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to get orders history');
+        }
+        const data = await response.json();
+        return data;
     }
 );
 
 export const getOneShopMedicines = createAsyncThunk(
     "shops/getOneShopMedicines",
     async ({id}: any) => {
-      const response = await fetch(`http://localhost:4444/medicines/${id}`);
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData[0].msg || 'Failed to get shops list');
-      }
-  
-      const data = await response.json();
-      return data;
+        const response = await fetch(`http://localhost:4444/medicinesDD/${id}`);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to get orders history');
+        }
+        const data = await response.json();
+        return data;
     }
 );
 
@@ -57,18 +53,12 @@ const ShopsSlice = createSlice({
             })
             .addCase(getAllShops.fulfilled, (state, action) => {
                 state.shops = action.payload;
-                // state.activeShopId = action.payload[0]._id;
                 state.getAllShopsLoading = false;
                 state.getAllShopsError = false;
             })
             .addCase(getAllShops.rejected, (state, action) => {
-                if (action.error.message) {
-                    state.getAllShopsError = true;
-                    state.getAllShopsLoading = false;
-                } else {
-                    state.getAllShopsError = true;
-                    state.createNewBicycleLoading = false;
-                }
+                state.getAllShopsError = action.error.message;
+                state.createNewBicycleLoading = false;
             })
             // get one shop medicines
             .addCase(getOneShopMedicines.pending, (state) => {
@@ -88,7 +78,7 @@ const ShopsSlice = createSlice({
             })
             .addCase(getOneShopMedicines.rejected, (state, action) => {
                 state.getOneShopMedicinesLoading = false
-                state.getOneShopMedicinesError = true
+                state.getOneShopMedicinesError = action.error.message
             })
     }
   });

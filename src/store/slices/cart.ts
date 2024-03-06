@@ -10,19 +10,33 @@ export const createOrder = createAsyncThunk(
             },
             body: JSON.stringify(order)
         });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData[0].msg || 'Failed to create an order');
-      }
-  
-      const data = await response.json();
-      return data;
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to get orders history');
+        }
+        const data = await response.json();
+        return data;
+    }
+);
+
+export const getOrdersHistory = createAsyncThunk(
+    "cart/getOrdersHistory",
+    async ({email}: {email: string}) => {
+        const response = await fetch(`http://localhost:4444/ordersHistory/${email}`)
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to get orders history');
+        }
+        const data = await response.json();
+        return data;
     }
 );
 
 const initialState: any = {
     products: JSON.parse(localStorage.getItem("cartProducts") || "[]"),
+    userOrders: [],
+    userOrdersLoading: false,
+    userOrdersError: false,
     orderIsConfirmed: false,
     createOrderError: false
 };
@@ -56,6 +70,10 @@ const cartSlice = createSlice({
         },
         resetOrderStatus: (state) => {
             state.orderIsConfirmed = false
+        },
+        resetOrdersHistory: (state) => {
+            state.userOrders = []
+            state.userOrdersError = false
         }
     },
     extraReducers: builder => {
@@ -73,9 +91,32 @@ const cartSlice = createSlice({
             .addCase(createOrder.rejected, state => {
                 state.createOrderError = true
             })
+        // get orders history
+            .addCase(getOrdersHistory.pending, state => {
+                state.userOrdersLoading = true
+                state.userOrdersError = false
+            })
+            .addCase(getOrdersHistory.fulfilled, (state, action) => {
+                const transformedOrders = action.payload.map((order: any) => ({
+                    ...order,
+                    items: order.items.map((item: any) => ({
+                        ...item,
+                        image: item.productId.image,
+                        name: item.productId.name
+                    })),
+                }));
+                state.userOrders = transformedOrders
+                state.userOrdersLoading = false
+                state.userOrdersError = false
+            })
+            .addCase(getOrdersHistory.rejected, (state, action) => {
+                state.userOrders = []
+                state.userOrdersLoading = false
+                state.userOrdersError = action.error.message              
+            })
     }
 });
 
-export const { addToCart, removeFromCart, updateQuantity, resetOrderStatus } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, resetOrderStatus, resetOrdersHistory } = cartSlice.actions;
 
 export default cartSlice.reducer;

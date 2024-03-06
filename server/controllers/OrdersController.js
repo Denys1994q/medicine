@@ -33,11 +33,14 @@ export const createOrder = async (req, res) => {
 export const getUserOrders = async (req, res) => {
     try {
         const { userEmail } = req.params;
-        const userOrders = await Order.find({ userEmail });
-        console.log(userEmail);
+        let userOrders = await Order.find({ userEmail }).populate({
+            path: "items.productId",
+            model: "Medicine",
+        });
         if (userOrders.length === 0) {
             return res.status(404).json({ message: "No orders found for the user" });
         }
+        userOrders = userOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         res.status(200).json(userOrders);
     } catch (err) {
         console.error("Error fetching user orders:", err);
