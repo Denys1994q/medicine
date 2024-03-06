@@ -47,7 +47,7 @@ const ProductCard = ({
                 </Typography>
                 {price && (
                     <Typography variant='h4' component='h4' className='product-card__title'>
-                        Price: {price}
+                        Price: {price} грн.
                     </Typography>
                 )}
                 {isCartBtn && (

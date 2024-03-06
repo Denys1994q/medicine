@@ -9,7 +9,9 @@ import NotFound from "./screens/not-found/NotFound";
 function App() {
     return (
         <>
-            <Header />
+            <div className="header-wrapper">
+                <Header />
+            </div>
             <main className='main-container'>
                 <Routes>
                     <Route path='/' element={<Home />} />
