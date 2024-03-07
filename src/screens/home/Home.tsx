@@ -77,7 +77,7 @@ const Home: React.FC = () => {
                     ) : null}
                 </div>
                 <div className='home__cards'>
-                    {!activeShopId && <h2>Please select a shop.</h2>}
+                    {!activeShopId && <h2 className="selectShop">Please select a shop.</h2>}
                     {medicines && medicines.length > 0 && (
                         <>
                             <div className='sort-panel'>

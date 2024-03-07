@@ -29,13 +29,14 @@ To run the project locally:
     ```
 6. Open new terminal and move to a server folder
     ```bash
+    cd medicine 
     cd server
     ```
 7. Install dependencies for the server part:
     ```bash
     npm install
     ```
-8. Create .env file in server folder file with a key named MONGO_URI (value for key located in and env-example file on repository)
+8. Create an .env file in the server folder with a key named MONGO_URI (value for key located in and env-example file on repository)
 9. Run server locally:
     ```bash
     npm run dev

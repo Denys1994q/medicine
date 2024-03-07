@@ -59,7 +59,7 @@ const History = () => {
                             );
                         })
                     ) : (
-                        <h3>No orders found</h3>
+                        <h3 className="noOrdersFound">No orders found</h3>
                     )}
                 </ul>
             </div>
