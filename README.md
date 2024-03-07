@@ -22,21 +22,22 @@ To run the project locally:
     ```bash
     npm install
     ```
-4. Run React app
+4. Create .env file file with a key REACT_APP_BASE_API_URL=http://localhost:4444
+5. Run React app
     ```bash
     npm start
     ```
-5. Open new terminal and move to a server folder
+6. Open new terminal and move to a server folder
     ```bash
     cd server
     ```
-6. Install dependencies for the server part:
+7. Install dependencies for the server part:
     ```bash
     npm install
     ```
-7. Run server locally:
+8. Create .env file in server folder file with a key named MONGO_URI (value for key located in and env-example file on repository)
+9. Run server locally:
     ```bash
     npm run dev
     ```
-8. Client and server part must be executed in parallel terminals to ensure everything works correctly.
-9. The server runs locally on port 4444. Therefore, to work locally, you need to change the value of REACT_APP_BASE_API_URL in the .env file to http://localhost:4444
+10. Client and server part must be executed in parallel terminals to ensure everything works correctly.
