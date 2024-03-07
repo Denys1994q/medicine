@@ -42,3 +42,4 @@ To run the project locally:
     npm run dev
     ```
 10. Client and server part must be executed in parallel terminals to ensure everything works correctly.
+11. If you don`t need to work with a localhost server, you can work with a live server published on Render.com. For this set REACT_APP_BASE_API_URL=https://medicines-backend.onrender.com in an .env file and ignore all steps with server folder.
