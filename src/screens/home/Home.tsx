@@ -40,8 +40,8 @@ const Home: React.FC = () => {
     }, [activeShopId]);
 
     useEffect(() => {
-        shopsErr ? setAlertIsOpen(true) : setAlertIsOpen(false);
-    }, [shopsErr]);
+        shopsErr || medicinesErr ? setAlertIsOpen(true) : setAlertIsOpen(false);
+    }, [shopsErr, medicinesErr]);
 
     const activeShop = shops && shops.length > 0 ? shops.find((shop: any) => shop._id === activeShopId) : null;
     const medicines = activeShop ? activeShop?.medicines : [];
@@ -93,7 +93,7 @@ const Home: React.FC = () => {
                 </div>
                 <Alert
                     open={alertIsOpen}
-                    message={shopsErr}
+                    message={shopsErr || medicinesErr}
                     severity='error'
                     onClose={() => setAlertIsOpen(false)}
                 />

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk  } from "@reduxjs/toolkit";
+import { ShopsState } from "./models/shops";
 
 export const getAllShops = createAsyncThunk(
     "shops/getAllShops",
@@ -15,8 +16,8 @@ export const getAllShops = createAsyncThunk(
 
 export const getOneShopMedicines = createAsyncThunk(
     "shops/getOneShopMedicines",
-    async ({id}: any) => {
-        const response = await fetch(`http://localhost:4444/medicinesDD/${id}`);
+    async ({id}: {id: string}) => {
+        const response = await fetch(`http://localhost:4444/medicines/${id}`);
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to get orders history');
@@ -27,13 +28,13 @@ export const getOneShopMedicines = createAsyncThunk(
 );
 
 
-const initialState: any = {
+const initialState: ShopsState = {
     shops: [],
-    getAllShopsLoading: false,
-    getAllShopsError: false,
     activeShopId: '',
+    getAllShopsLoading: false,
+    getAllShopsError: '',
     getOneShopMedicinesLoading: false,
-    getOneShopMedicinesError: false
+    getOneShopMedicinesError: ''
 };
 
 const ShopsSlice = createSlice({
@@ -49,36 +50,40 @@ const ShopsSlice = createSlice({
         // get shops list
             .addCase(getAllShops.pending, state => {
                 state.getAllShopsLoading = true;
-                state.getAllShopsError = false;
+                state.getAllShopsError = '';
             })
             .addCase(getAllShops.fulfilled, (state, action) => {
                 state.shops = action.payload;
                 state.getAllShopsLoading = false;
-                state.getAllShopsError = false;
+                state.getAllShopsError = '';
             })
             .addCase(getAllShops.rejected, (state, action) => {
-                state.getAllShopsError = action.error.message;
-                state.createNewBicycleLoading = false;
+                if (action.error.message) {
+                    state.getAllShopsError = action.error.message;
+                }
+                state.getAllShopsLoading = false;
             })
             // get one shop medicines
             .addCase(getOneShopMedicines.pending, (state) => {
                 state.getOneShopMedicinesLoading = true
-                state.getOneShopMedicinesError = false
+                state.getOneShopMedicinesError = ''
             })
             .addCase(getOneShopMedicines.fulfilled, (state, action) => {
                 const medicines = action.payload; 
                 const shopId = medicines[0].shop_id
-                const shopIndex = state.shops.findIndex((shop: any) => shop._id === shopId);
+                const shopIndex = state.shops.findIndex(shop => shop._id === shopId);
                 if (shopIndex !== -1) {
                     state.shops[shopIndex].medicines = medicines;
                 }
                 state.activeShopId = shopId
                 state.getOneShopMedicinesLoading = false
-                state.getOneShopMedicinesError = false
+                state.getOneShopMedicinesError = ''
             })
             .addCase(getOneShopMedicines.rejected, (state, action) => {
                 state.getOneShopMedicinesLoading = false
-                state.getOneShopMedicinesError = action.error.message
+                if (action.error.message) {
+                    state.getOneShopMedicinesError = action.error.message
+                }
             })
     }
   });

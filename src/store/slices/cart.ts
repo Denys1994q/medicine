@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { CartState } from "./models/cart";
+import { Order } from "./models/cart";
 
 export const createOrder = createAsyncThunk(
     "cart/createOrder",
-    async ({order}: any) => {
+    async ({order}: {order: Order}) => {
         const response = await fetch('http://localhost:4444/orders', {
             method: 'POST',
             headers: {
@@ -32,13 +34,13 @@ export const getOrdersHistory = createAsyncThunk(
     }
 );
 
-const initialState: any = {
+const initialState: CartState = {
     products: JSON.parse(localStorage.getItem("cartProducts") || "[]"),
     userOrders: [],
     userOrdersLoading: false,
-    userOrdersError: false,
+    userOrdersError: '',
     orderIsConfirmed: false,
-    createOrderError: false
+    createOrderError: ''
 };
 
 const cartSlice = createSlice({
@@ -73,28 +75,28 @@ const cartSlice = createSlice({
         },
         resetOrdersHistory: (state) => {
             state.userOrders = []
-            state.userOrdersError = false
+            state.userOrdersError = ''
         }
     },
     extraReducers: builder => {
         builder 
         // create order
             .addCase(createOrder.pending, state => {
-                state.createOrderError = false
+                state.createOrderError = ''
             })
-            .addCase(createOrder.fulfilled, (state, action) => {
+            .addCase(createOrder.fulfilled, state => {
                 state.products = [];
                 localStorage.removeItem('cartProducts')
                 state.orderIsConfirmed = true
-                state.createOrderError = false
+                state.createOrderError = ''
             })
             .addCase(createOrder.rejected, state => {
-                state.createOrderError = true
+                state.createOrderError = ''
             })
         // get orders history
             .addCase(getOrdersHistory.pending, state => {
                 state.userOrdersLoading = true
-                state.userOrdersError = false
+                state.userOrdersError = ''
             })
             .addCase(getOrdersHistory.fulfilled, (state, action) => {
                 const transformedOrders = action.payload.map((order: any) => ({
@@ -107,12 +109,14 @@ const cartSlice = createSlice({
                 }));
                 state.userOrders = transformedOrders
                 state.userOrdersLoading = false
-                state.userOrdersError = false
+                state.userOrdersError = ''
             })
             .addCase(getOrdersHistory.rejected, (state, action) => {
                 state.userOrders = []
                 state.userOrdersLoading = false
-                state.userOrdersError = action.error.message              
+                if (action.error.message) {
+                    state.userOrdersError = action.error.message   
+                }
             })
     }
 });

@@ -7,33 +7,37 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { removeFromCart, updateQuantity, createOrder } from "../../store/slices/cart";
 import { useNavigate  } from "react-router-dom";
 import Alert from "../../components/alert/Alert";
+import { Order } from "../../store/slices/models/cart";
+
+interface UserData {
+    name: string, 
+    email: string, 
+    phone: string, 
+    address: string
+}
 
 const Cart: React.FC = () => {
     const navigate = useNavigate();
-    const [formValues, setFormValues] = useState<any>(null);
+    const [formValues, setFormValues] = useState<UserData | null>(null);
     const dispatch = useAppDispatch();
     const cartProds = useAppSelector(store => store.cart.products);
     const orderIsConfirmed = useAppSelector(store => store.cart.orderIsConfirmed);
     const createOrderError = useAppSelector(store => store.cart.createOrderError);
     const [alertIsOpen, setAlertIsOpen] = useState(false);
     
-    const handleFormChanges = (values: any) => {
-        if (values) {
-            setFormValues(values)
-        } else {
-            setFormValues(null)
-        }
+    const handleFormChanges = (values: UserData) => {
+        values ? setFormValues(values) : setFormValues(null)
     };
 
     const sendForm = () => {
         if (formValues) {
-            const items = cartProds.map((prod: any) => {
+            const items = cartProds.map(prod => {
                 return {
                     productId: prod._id, 
                     quantity: prod.quantity
                 }
             })
-            const order = {
+            const order: Order = {
                 userName: formValues.name,
                 userEmail: formValues.email,
                 userPhone: formValues.phone,
@@ -60,7 +64,7 @@ const Cart: React.FC = () => {
     }, [orderIsConfirmed])
 
     const total = useMemo(() => {
-        return cartProds.reduce((acc: number, item: any) => {
+        return cartProds.reduce((acc, item) => {
             return acc + item.price * item.quantity;
         }, 0);
     }, [cartProds]);
