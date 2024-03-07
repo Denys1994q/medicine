@@ -11,7 +11,10 @@ const UserForm: React.FC<UserForm> = ({handleFormChanges}) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         email: Yup.string().email("Invalid email address").required("Email is required"),
-        phone: Yup.string().required("Phone is required"),
+        phone: Yup.string()
+            .matches(/^(\+?3)?8[ -]?\(?(0\d{2})\)?[ -]?(\d{3})[ -]?(\d{2})[ -]?(\d{2})$/, 
+            "Phone number must start with '+38'")
+            .required("Phone is required"),
         address: Yup.string().required("Address is required"),
     });
 
@@ -55,7 +58,7 @@ const UserForm: React.FC<UserForm> = ({handleFormChanges}) => {
                     <Form>
                         <TextInput type='text' name='name' label='Name' />
                         <TextInput type='email' name='email' label='Email' />
-                        <TextInput type='text' name='phone' label='Phone' />
+                        <TextInput type='tel' name='phone' label='Phone' />
                         <TextInput type='text' name='address' label='Address' multiline />
                     </Form>
                 )}
