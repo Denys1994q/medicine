@@ -16,7 +16,7 @@ To run the project locally:
     ```
 2. Navigate to the cloned repository directory:
     ```bash
-    cd medicine-app
+    cd medicine
     ```
 3. Install dependencies for the client part:
     ```bash
