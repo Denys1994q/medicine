@@ -4,7 +4,7 @@ import { ShopsState } from "./models/shops";
 export const getAllShops = createAsyncThunk(
     "shops/getAllShops",
     async () => {
-        const response = await fetch("http://localhost:4444/shops");
+        const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/shops`);
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to get orders history');
@@ -17,7 +17,7 @@ export const getAllShops = createAsyncThunk(
 export const getOneShopMedicines = createAsyncThunk(
     "shops/getOneShopMedicines",
     async ({id}: {id: string}) => {
-        const response = await fetch(`http://localhost:4444/medicines/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/medicines/${id}`);
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to get orders history');

@@ -5,7 +5,7 @@ import { Order } from "./models/cart";
 export const createOrder = createAsyncThunk(
     "cart/createOrder",
     async ({order}: {order: Order}) => {
-        const response = await fetch('http://localhost:4444/orders', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ export const createOrder = createAsyncThunk(
 export const getOrdersHistory = createAsyncThunk(
     "cart/getOrdersHistory",
     async ({email}: {email: string}) => {
-        const response = await fetch(`http://localhost:4444/ordersHistory/${email}`)
+        const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/ordersHistory/${email}`)
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to get orders history');
