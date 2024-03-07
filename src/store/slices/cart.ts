@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CartState } from "./models/cart";
+import { CartState, OrderHistory } from "./models/cart";
 import { Order } from "./models/cart";
 
 export const createOrder = createAsyncThunk(
@@ -49,7 +49,7 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             const productToAdd = action.payload;
-            const existingProductIndex = state.products.findIndex((product: any) => product._id === productToAdd._id);
+            const existingProductIndex = state.products.findIndex(product => product._id === productToAdd._id);
             if (existingProductIndex !== -1) {
                 state.products[existingProductIndex].quantity++;
             } else {
@@ -59,12 +59,12 @@ const cartSlice = createSlice({
         },
         removeFromCart: (state, action) => {
             const productIdToRemove = action.payload;
-            state.products = state.products.filter((product: any) => product._id !== productIdToRemove);
+            state.products = state.products.filter(product => product._id !== productIdToRemove);
             localStorage.setItem("cartProducts", JSON.stringify(state.products));
         },
         updateQuantity: (state, action) => {
             const { productId, newQuantity } = action.payload;
-            const productToUpdate = state.products.find((product: any) => product._id === productId);
+            const productToUpdate = state.products.find(product => product._id === productId);
             if (productToUpdate) {
                 productToUpdate.quantity = newQuantity;
                 localStorage.setItem("cartProducts", JSON.stringify(state.products));
@@ -99,9 +99,9 @@ const cartSlice = createSlice({
                 state.userOrdersError = ''
             })
             .addCase(getOrdersHistory.fulfilled, (state, action) => {
-                const transformedOrders = action.payload.map((order: any) => ({
+                const transformedOrders = action.payload.map((order: OrderHistory) => ({
                     ...order,
-                    items: order.items.map((item: any) => ({
+                    items: order.items.map(item => ({
                         ...item,
                         image: item.productId.image,
                         name: item.productId.name

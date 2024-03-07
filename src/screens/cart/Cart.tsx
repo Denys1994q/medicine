@@ -9,7 +9,7 @@ import { useNavigate  } from "react-router-dom";
 import Alert from "../../components/alert/Alert";
 import { Order } from "../../store/slices/models/cart";
 
-interface UserData {
+export interface UserData {
     name: string, 
     email: string, 
     phone: string, 
@@ -25,7 +25,7 @@ const Cart: React.FC = () => {
     const createOrderError = useAppSelector(store => store.cart.createOrderError);
     const [alertIsOpen, setAlertIsOpen] = useState(false);
     
-    const handleFormChanges = (values: UserData) => {
+    const handleFormChanges = (values: UserData | null) => {
         values ? setFormValues(values) : setFormValues(null)
     };
 

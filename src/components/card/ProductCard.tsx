@@ -2,12 +2,15 @@ import { Card, CardContent, CardMedia, Typography, Button } from "@mui/material"
 import "./ProductCard.sass";
 import QuantityBtn from "../quantity-btn/Quantity-btn";
 
-interface ProductCard {
+export interface IProdCard {
     image: string;
     id: string;
     title: string;
     startQuantity?: number;
     price?: number;
+}
+
+export interface ProductCardProps extends IProdCard {
     isCartBtn?: boolean;
     isQuantityBtn?: boolean;
     isFlex?: boolean;
@@ -16,7 +19,7 @@ interface ProductCard {
     onQuantityChange?: (id: string, quantity: number) => void;
 }
 
-const ProductCard: React.FC<ProductCard> = ({
+const ProductCard: React.FC<ProductCardProps> = ({
     image,
     id,
     title,

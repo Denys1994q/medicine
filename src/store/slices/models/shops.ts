@@ -1,16 +1,17 @@
 
-export interface medicine {
+export interface Medicine {
     _id: string,
     name: string,
     price: number,
     shop_id: string,
-    image: string
+    image: string,
+    quantity?: number
 }
 
 export interface Shop {
     _id: string,
     name: string,
-    medicines: medicine[]
+    medicines: Medicine[]
 }
 
 export interface ShopsState {

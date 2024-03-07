@@ -7,7 +7,7 @@ import { useAppSelector } from "../../store/hooks";
 
 const Header: React.FC = () => {
     const products = useAppSelector(store => store.cart.products);
-    const itemsInCart = products.reduce((acc: any, item: any) => acc + item.quantity, 0);
+    const itemsInCart = products.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
         <AppBar position='static'>
@@ -27,7 +27,7 @@ const Header: React.FC = () => {
                             </Badge>
                         </Link>
                     </li>
-                    <li>
+                    <li className="header__list-item">
                         <Link to='/history'>History</Link>
                     </li>
                 </ul>

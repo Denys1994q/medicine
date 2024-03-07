@@ -1,7 +1,29 @@
-import { medicine } from "./shops"
+import { Medicine } from "./shops";
 
-export interface CartProd extends medicine {
+export interface CartProd extends Medicine {
     quantity: number
+}
+
+export interface OrderHistory {
+    _id: string;
+    userEmail: string;
+    userName: string;
+    userAddress: string;
+    userPhone: string;
+    items: {
+        productId: {
+            _id: string;
+            name: string;
+            price: number;
+            shop_id: string;
+            image: string;
+        };
+        quantity: number;
+        _id: string;
+    }[];
+    totalPrice: number;
+    createdAt: string;
+    __v: number;
 }
 
 export interface Order {
@@ -15,7 +37,7 @@ export interface Order {
 
 export interface CartState {
     products: CartProd[],
-    userOrders: Order[],
+    userOrders: OrderHistory[],
     userOrdersLoading: boolean,
     userOrdersError: string,
     orderIsConfirmed: boolean,

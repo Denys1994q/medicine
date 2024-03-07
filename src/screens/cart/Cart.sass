@@ -1,3 +1,5 @@
+@import '../../styles/mixins'
+
 .cart
     padding: 10px
     &__main
@@ -7,12 +9,15 @@
         gap: 30px
     &__form
         width: 40%
-        // background: green
+        @include respond(phoneXXL)
+            width: 100%
     &__cards
         width: 50%
-        // background: red
         height: 72vh
         overflow-y: auto
+        @include respond(phoneXXL)
+            width: 100%
+            height: auto
     &__total
         margin-top: 20px
         padding: 10px
@@ -20,6 +25,5 @@
         gap: 40px
         justify-content: flex-end
         align-items: center
-        // background: red
 .total
     font-size: 24px

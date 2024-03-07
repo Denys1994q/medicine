@@ -19,12 +19,12 @@ const History = () => {
     });
 
     useEffect(() => {
-        dispatch(resetOrdersHistory())
-    }, [])
+        dispatch(resetOrdersHistory());
+    }, []);
 
     useEffect(() => {
-        userOrdersError ? setAlertIsOpen(true) : setAlertIsOpen(false)
-    }, [userOrdersError])
+        userOrdersError ? setAlertIsOpen(true) : setAlertIsOpen(false);
+    }, [userOrdersError]);
 
     return (
         <section className='history'>
@@ -36,7 +36,6 @@ const History = () => {
                     validationSchema={validationSchema}
                     onSubmit={values => {
                         dispatch(getOrdersHistory({ email: values.email }));
-                        console.log(values);
                     }}
                 >
                     {({ isValid }) => (
@@ -48,18 +47,20 @@ const History = () => {
             </div>
             <div className='history__orders'>
                 <ul className='orders-list'>
-                    {userOrders && userOrders.length > 0
-                        ? userOrders.map((order: any) => {
-                              return (
-                                  <li key={order._id} className='orders'>
-                                      <div className='orders__cards'>
-                                          <Cards cards={order.items} />
-                                      </div>
-                                      <div className='orders__total'>Total price: {order.totalPrice} грн. </div>
-                                  </li>
-                              );
-                          })
-                        : <h3>No orders found</h3>}
+                    {userOrders && userOrders.length > 0 ? (
+                        userOrders.map((order: any) => {
+                            return (
+                                <li key={order._id} className='orders'>
+                                    <div className='orders__cards'>
+                                        <Cards cards={order.items} />
+                                    </div>
+                                    <div className='orders__total'>Total price: {order.totalPrice} грн. </div>
+                                </li>
+                            );
+                        })
+                    ) : (
+                        <h3>No orders found</h3>
+                    )}
                 </ul>
             </div>
             <Alert

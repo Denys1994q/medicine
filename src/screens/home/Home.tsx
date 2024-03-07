@@ -9,6 +9,7 @@ import Alert from "../../components/alert/Alert";
 import SortPanel from "../../components/sort-panel/Sort-panel";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import { Medicine } from "../../store/slices/models/shops";
 
 const Home: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const Home: React.FC = () => {
         dispatch(setActiveShopId(id));
     };
 
-    const handleAddToCartClick = (card: any) => {
+    const handleAddToCartClick = (card: Medicine) => {
         dispatch(addToCart(card));
     };
 
@@ -43,12 +44,12 @@ const Home: React.FC = () => {
         shopsErr || medicinesErr ? setAlertIsOpen(true) : setAlertIsOpen(false);
     }, [shopsErr, medicinesErr]);
 
-    const activeShop = shops && shops.length > 0 ? shops.find((shop: any) => shop._id === activeShopId) : null;
+    const activeShop = shops && shops.length > 0 ? shops.find(shop => shop._id === activeShopId) : null;
     const medicines = activeShop ? activeShop?.medicines : [];
 
     const sortedMedicines =
         medicines && medicines.length > 0 && sortOrder
-            ? [...medicines].sort((a: any, b: any) => {
+            ? [...medicines].sort((a, b) => {
                   const priceA = a.price;
                   const priceB = b.price;
                   if (sortOrder === "asc") {
@@ -61,7 +62,7 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <Box sx={{position: 'fixed', top: 60, left: 0, width: "100%", marginTop: '5px' }}>
+            <Box sx={{ position: "fixed", top: 60, left: 0, width: "100%", marginTop: "5px" }}>
                 {medicinesLoading && <LinearProgress />}
             </Box>
             <div className='home'>

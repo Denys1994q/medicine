@@ -1,10 +1,16 @@
+@import './styles/mixins'
+
 .main-container
     max-width: 1300px
     margin: 0 auto
     padding-top: 70px
     display: flex
     flex-direction: column
+    @include respond(phoneL)
+        padding-top: 20px
 .header-wrapper
     position: fixed
     width: 100%
     z-index: 10
+    @include respond(phoneL)
+        position: static

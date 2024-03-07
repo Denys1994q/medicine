@@ -1,12 +1,21 @@
+@import '../../styles/mixins'
+
 .header__list
     display: flex
+    flex-wrap: wrap
     gap: 60px
     align-items: center
     font-size: 18px
     list-style: none
-
+    @include respond(phoneXL)
+        gap: 15px
+        padding: 5px
+    @include respond(phoneM)
+        padding: 10px
 .header__list-item
     position: relative
+    @include respond(phoneXL)
+        margin-right: 20px
     &:not(:last-child)::after
         content: ""
         display: block
@@ -18,3 +27,5 @@
         position: absolute
         top: 0
         right: -30px
+        @include respond(phoneXL)
+            right: -25px

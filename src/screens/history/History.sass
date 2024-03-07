@@ -1,8 +1,13 @@
+@import '../../styles/mixins'
+
 .history
     &__form
         width: 400px
         margin: 0 auto
         padding: 30px
+        @include respond(phoneL)
+            width: 100%
+            padding: 10px
     &__orders
         margin-top: 20px
 .orders-list
@@ -19,9 +24,11 @@
         width: 800px
         height: 340px
         overflow: auto
+        @include respond(phoneXXL)
+            height: auto
+            width: 100%
     &__total
         padding: 10px
-        // background: green
         width: 400px
         display: flex
         align-items: center

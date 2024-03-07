@@ -2,12 +2,13 @@ import { Formik, Form } from "formik";
 import { Typography } from "@mui/material";
 import * as Yup from "yup";
 import TextInput from "../../inputs/text-input/Text-input";
+import { UserData } from "../../../screens/cart/Cart";
 
-interface UserForm {
-    handleFormChanges: (values: any) => void
+interface UserFormProps {
+    handleFormChanges: (values: UserData | null) => void
 }
 
-const UserForm: React.FC<UserForm> = ({handleFormChanges}) => {
+const UserForm: React.FC<UserFormProps> = ({handleFormChanges}) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -18,7 +19,7 @@ const UserForm: React.FC<UserForm> = ({handleFormChanges}) => {
         address: Yup.string().required("Address is required"),
     });
 
-    const onFormChanges = (values: any) => {
+    const onFormChanges = (values: UserData | null) => {
         handleFormChanges(values)
     }
 
@@ -37,16 +38,13 @@ const UserForm: React.FC<UserForm> = ({handleFormChanges}) => {
                 validationSchema={validationSchema}
                 validateOnMount={true}
                 validateOnChange={true}
-                onSubmit={values => {
-                    console.log(values);
-                }}
+                onSubmit={() => {}}
                 validate={(values) => {
                     const errors = {};
                     validationSchema
                         .validate(values, { abortEarly: false })
                         .then(() => {
                             onFormChanges(values); 
-                            // console.log(values)
                         })
                         .catch((validationErrors) => {
                             onFormChanges(null); 

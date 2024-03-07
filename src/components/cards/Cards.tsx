@@ -1,14 +1,15 @@
 import { List, ListItem, Typography } from "@mui/material";
 import "./Cards.sass";
 import ProductCard from "../card/ProductCard";
+import { Medicine } from "../../store/slices/models/shops";
 
 interface CardsProps {
-    cards: any[];
+    cards: Medicine[];
     cardWidth?: number;
     isFlex?: boolean;
     isCartBtn?: boolean;
     isQuantityBtn?: boolean;
-    addToCartClick?: (card: any) => void;
+    addToCartClick?: (card: Medicine) => void;
     onDeleteClick?: (id: string) => void;
     onQuantityChangeClick?: (id: string, quantity: number) => void;
 }
@@ -32,7 +33,7 @@ const Cards: React.FC<CardsProps> = ({
                             id={card._id}
                             title={card.name}
                             image={card.image}
-                            price={card.price ? card.price : null}
+                            price={card.price ? card.price : undefined}
                             isFlex={isFlex}
                             isQuantityBtn={isQuantityBtn}
                             isCartBtn={isCartBtn}
